@@ -22,7 +22,6 @@ const Home = () => {
   const { connect } = useConnect({
     connector: new InjectedConnector(),
   })
-  const { disconnect } = useDisconnect()
 
   const navigate = useNavigate();
   // const handleToLogin = () => navigate("/login");
@@ -72,17 +71,6 @@ const Home = () => {
               onClick={() => connect()}
             >
               Get Started
-            </Button>
-            <Button
-              colorScheme={'green'}
-              bg={'green.400'}
-              px={6}
-              _hover={{
-                bg: 'green.500',
-              }}
-              onClick={() => disconnect()}
-            >
-              Disconnect
             </Button>
           </Stack>
         </Stack>
