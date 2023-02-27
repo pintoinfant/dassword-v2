@@ -10,11 +10,29 @@ import {
   createIcon,
 } from '@chakra-ui/react';
 import { useNavigate } from "react-router-dom";
+import { useAccount, useConnect, useDisconnect } from 'wagmi'
+import { InjectedConnector } from 'wagmi/connectors/injected'
+import { useEffect } from 'react';
+
 
 
 const Home = () => {
+
+  const { address, isConnected } = useAccount()
+  const { connect } = useConnect({
+    connector: new InjectedConnector(),
+  })
+  const { disconnect } = useDisconnect()
+
   const navigate = useNavigate();
-  const handleToLogin = () => navigate("/login");
+  // const handleToLogin = () => navigate("/login");
+
+  useEffect(() => {
+    if (isConnected) {
+      // console.log('address', address)
+      navigate("/app")
+    }
+  }, [isConnected])
 
   return (
     <>
@@ -39,7 +57,7 @@ const Home = () => {
             Our advanced technology ensures protection against password breaches and unauthorized access. Choose our ultimate decentralized password manager for secure storage and encryption of your passwords. Rest easy with peace of mind and trust in our commitment to safeguard your online life.
           </Text>
           <Stack
-            direction={'column'}
+            direction={'row'}
             spacing={3}
             align={'center'}
             alignSelf={'center'}
@@ -51,9 +69,20 @@ const Home = () => {
               _hover={{
                 bg: 'green.500',
               }}
-              onClick={handleToLogin}
+              onClick={() => connect()}
             >
               Get Started
+            </Button>
+            <Button
+              colorScheme={'green'}
+              bg={'green.400'}
+              px={6}
+              _hover={{
+                bg: 'green.500',
+              }}
+              onClick={() => disconnect()}
+            >
+              Disconnect
             </Button>
           </Stack>
         </Stack>
