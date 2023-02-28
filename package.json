@@ -8,6 +8,7 @@
     "@emotion/styled": "^11.0.0",
     "@ethereumjs/tx": "^4.1.0",
     "@fontsource/plus-jakarta-sans": "^4.5.11",
+    "@lit-protocol/sdk-browser": "^1.1.248",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.0.1",
     "@testing-library/user-event": "^14.1.0",
