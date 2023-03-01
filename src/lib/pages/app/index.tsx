@@ -85,29 +85,33 @@ export default function Application() {
         as="header"
         width="full"
         align="center"
-        alignSelf="flex-start"
-        justifyContent="center"
+        // alignSelf="flex-start"
+        justifyContent="space-between"
         gridGap={2}
+        marginRight={4}
       >
-        <Box marginLeft="auto">
+        <Box>
+          {data.length > 0 ? (
+            <Heading>My <Text as={'span'} color={'green.400'}
+              textTransform={'capitalize'}
+            >
+              Passwords
+            </Text></Heading>
+          ) : (
+            <Heading><Text as={'span'} color={'green.400'}
+              textTransform={'capitalize'}
+            >
+              No Password {" "}
+            </Text>
+              Created</Heading>
+          )}
+        </Box>
+        <Box>
           <Button onClick={onOpen}>Add New Password</Button>
         </Box>
       </Flex>
       <Box minH={'60vh'}>
-        {data.length > 0 ? (
-          <Heading>My <Text as={'span'} color={'green.400'}
-            textTransform={'capitalize'}
-          >
-            Passwords
-          </Text></Heading>
-        ) : (
-          <Heading><Text as={'span'} color={'green.400'}
-            textTransform={'capitalize'}
-          >
-            No Password {" "}
-          </Text>
-            Created</Heading>
-        )}
+
       </Box>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
