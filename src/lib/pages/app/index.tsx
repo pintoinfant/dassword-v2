@@ -97,16 +97,14 @@ export default function Application() {
             encrypted_key: encrypted.encryptedSymmetricKey
           }
         ]).then((res) => {
-          console.log(res)
+          // console.log(res)
         })
       })
-    }).then(() => setTimeout(() => {
-      setLoading(false)
-    }, 2000)).then(() => {
-      renderData()
     })
+      // .then(() => setLoading(false))
+      .then(() => { renderData() })
+    // .then(() => setLoading())
     // setLoading(false)
-
 
   }
 
@@ -121,6 +119,19 @@ export default function Application() {
     }
     setLoading(false)
   }
+
+  const deleteCredential = async (id: any) => {
+    setLoading(true)
+    // console.log(id)
+    const { data, error } = await supabase
+      .from('details')
+      .delete()
+      .eq('id', id)
+    // console.log(data)
+    // setLoading(false)
+    await renderData()
+  }
+
 
   useEffect(() => {
     renderData()
@@ -164,7 +175,7 @@ export default function Application() {
       <Box minH={'60vh'} marginY={5}>
         <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} gap={2}>
           {data.map((item: any, index: any) => {
-            // console.log(item )
+            // console.log(item)
             return (
               <>
                 <GridItem key={index}>
@@ -189,15 +200,19 @@ export default function Application() {
                             </FormControl>
                           </Box>
                         </HStack>
-
-                        <Button colorScheme={'green'}
-                          bg={'green.400'}
-                          px={6}
-                          _hover={{
-                            bg: 'green.500',
-                          }} mr={3} onClick={(e: any) => handleDecrypt(item.encrypted_string, item.encrypted_key)}>
-                          Decrypt Credential
-                        </Button>
+                        <Stack direction={{ base: 'column', md: 'row' }}>
+                          <Button colorScheme={'green'}
+                            bg={'green.400'}
+                            px={6}
+                            _hover={{
+                              bg: 'green.500',
+                            }} onClick={(e: any) => handleDecrypt(item.encrypted_string, item.encrypted_key)}>
+                            Decrypt Credential
+                          </Button>
+                          <Button colorScheme={'red'} px={6} mr={3} onClick={(e: any) => deleteCredential(item.id)}>
+                            Delete Credential
+                          </Button>
+                        </Stack>
                       </Stack>                    </CardBody>
                   </Card>
                 </GridItem>
@@ -254,6 +269,6 @@ export default function Application() {
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Box>
+    </Box >
   );
 }
