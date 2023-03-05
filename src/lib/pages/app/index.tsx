@@ -100,7 +100,9 @@ export default function Application() {
           console.log(res)
         })
       })
-    }).then(() => setLoading(false)).then(() => {
+    }).then(() => setTimeout(() => {
+      setLoading(false)
+    }, 2000)).then(() => {
       renderData()
     })
     // setLoading(false)
@@ -160,13 +162,13 @@ export default function Application() {
         </Box>
       </Flex>
       <Box minH={'60vh'} marginY={5}>
-        <Grid templateColumns='repeat(2, 1fr)' gap={2}>
+        <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} gap={2}>
           {data.map((item: any, index: any) => {
             // console.log(item )
             return (
               <>
                 <GridItem key={index}>
-                  <Card maxW={'25vw'} key={index}>
+                  <Card maxW={{ base: '100vw', md: '50vw', lg: '25vw' }} key={index}>
                     <CardBody>
                       <Stack spacing={4} marginTop={4}>
                         <FormControl id="site" isRequired isReadOnly>

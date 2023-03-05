@@ -11,7 +11,7 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <Box margin="0 auto" maxWidth={800} transition="0.5s ease-out">
+    <Box margin="0 auto" maxWidth={{ base: 800, md: '80vw' }} transition="0.5s ease-out">
       <Blur
         position={"absolute"}
         top={-10}
