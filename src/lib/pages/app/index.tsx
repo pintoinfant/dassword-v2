@@ -96,11 +96,15 @@ export default function Application() {
             encrypted_string: res,
             encrypted_key: encrypted.encryptedSymmetricKey
           }
-        ]).then((res) => {
-          // console.log(res)
+        ]).then(() => {
+          supabase.from('details').select('*').eq('address', address).then((data) => {
+            if (data) {
+              setData(data.data)
+            }
+          })
         })
       })
-    })
+    }).then(() => setLoading(false))
       // .then(() => setLoading(false))
       .then(() => { renderData() })
     // .then(() => setLoading())
