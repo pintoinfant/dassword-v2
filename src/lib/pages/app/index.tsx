@@ -25,7 +25,7 @@ import {
 import { ReactElement, useEffect, useState } from 'react';
 import { useAccount } from "wagmi"
 import Lit from "../../components/LitProtocol"
-import { supabase } from "../../helpers/supbaseClient"
+// import { supabase } from "../../helpers/supbaseClient"
 import Loader from '../../components/Loader';
 
 
@@ -80,8 +80,9 @@ export default function Application() {
     console.log(blob)
     const decrypted = await lit.decryptText(blob, encrypted_key, address)
     const jsonData = (JSON.parse(decrypted))
-    setDecryptedPassword(jsonData)
-    setLoading(false)
+    console.log(jsonData)
+    // setDecryptedPassword(jsonData)
+    // setLoading(false)
   }
 
   const handleSubmit = () => {
@@ -89,22 +90,31 @@ export default function Application() {
     setLoading(true)
     lit.encryptText(JSON.stringify(webPassword), address).then((encrypted) => {
       blobToBase64(encrypted.encryptedString).then(res => {
-        supabase.from('details').insert([
-          {
-            address,
-            site: webPassword.site,
-            encrypted_string: res,
-            encrypted_key: encrypted.encryptedSymmetricKey
-          }
-        ]).then(() => {
-          supabase.from('details').select('*').eq('address', address).then((data) => {
-            if (data) {
-              setData(data.data)
-            }
-          })
+        console.log( {
+              address,
+              site: webPassword.site,
+              encrypted_string: res,
+              encrypted_key: encrypted.encryptedSymmetricKey
         })
+        handleDecrypt(res,encrypted.encryptedSymmetricKey)
+        // supabase.from('details').insert([
+        //   {
+        //     address,
+        //     site: webPassword.site,
+        //     encrypted_string: res,
+        //     encrypted_key: encrypted.encryptedSymmetricKey
+        //   }
+        // ]).then(() => {
+        //   supabase.from('details').select('*').eq('address', address).then((data) => {
+        //     if (data) {
+        //       setData(data.data)
+        //     }
+        //   })
+        // })
       })
-    }).then(() => setLoading(false))
+    }).then(
+      () => {setLoading(false)
+      })
       // .then(() => setLoading(false))
       .then(() => { renderData() })
     // .then(() => setLoading())
@@ -114,23 +124,23 @@ export default function Application() {
 
   const renderData = async () => {
     setLoading(true)
-    const { data, error }: { data: any, error: any } = await supabase
-      .from('details')
-      .select('*')
-      .eq('address', address)
-    if (data) {
-      setData(data)
-    }
+    // const { data, error }: { data: any, error: any } = await supabase
+    //   .from('details')
+    //   .select('*')
+    //   .eq('address', address)
+    // if (data) {
+    //   setData(data)
+    // }
     setLoading(false)
   }
 
   const deleteCredential = async (id: any) => {
     setLoading(true)
     // console.log(id)
-    const { data, error } = await supabase
-      .from('details')
-      .delete()
-      .eq('id', id)
+    // const { data, error } = await supabase
+    //   .from('details')
+    //   .delete()
+    //   .eq('id', id)
     // console.log(data)
     // setLoading(false)
     await renderData()
