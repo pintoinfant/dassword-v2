@@ -32,15 +32,9 @@ import {
 import { ReactElement, useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import Lit from "../../components/LitProtocol";
-// import { supabase } from "../../helpers/supbaseClient"
 import Loader from "../../components/Loader";
-import { pocketbase } from "../../helpers/pocketbase"
-
-interface FeatureProps {
-  text: string;
-  iconBg: string;
-  icon?: ReactElement;
-}
+import { pocketbase } from "../../helpers/pocketbase";
+import { CopyIcon } from "@chakra-ui/icons";
 
 export default function Application() {
   const { colorMode } = useColorMode();
@@ -102,25 +96,26 @@ export default function Application() {
             service: webPassword.service,
             encrypted_string: res,
             key: encrypted.encryptedSymmetricKey,
-          })
+          });
         });
-      }).then(() => {
-        renderData();
       })
+      .then(() => {
+        renderData();
+      });
   };
 
   const renderData = async () => {
     setLoading(true);
     const data = await pocketbase.collection("passwords").getFullList({
-      address
-    })
-    setData(data)
+      address,
+    });
+    setData(data);
     setLoading(false);
   };
 
   const deleteCredential = async (id: any) => {
     setLoading(true);
-    await pocketbase.collection("passwords").delete(id)
+    await pocketbase.collection("passwords").delete(id);
     await renderData();
   };
 
@@ -180,9 +175,7 @@ export default function Application() {
             return (
               <>
                 <GridItem key={index}>
-                  <Card
-                    key={index}
-                  >
+                  <Card key={index}>
                     <CardBody>
                       <Stack spacing={4} marginTop={4}>
                         <FormControl id="service" isRequired isReadOnly>
@@ -193,19 +186,35 @@ export default function Application() {
                           <Box>
                             <FormControl id="username" isRequired isReadOnly>
                               <FormLabel>Username</FormLabel>
-                              <Input
-                                type="text"
-                                defaultValue={
-                                  item.service === decryptedPassword.service
-                                    ? decryptedPassword.username
-                                    : ""
-                                }
-                              />
+                              <InputGroup>
+                                <Input
+                                  type="text"
+                                  defaultValue={
+                                    item.service === decryptedPassword.service
+                                      ? decryptedPassword.username
+                                      : ""
+                                  }
+                                />
+                                <InputRightElement h={"full"}>
+                                  <Button
+                                  variant={"ghost"}
+                                    borderRadius={"full"}
+                                    onClick={() =>
+                                      setShowPassword(
+                                        (showPassword) => !showPassword,
+                                      )
+                                    }
+                                  >
+                                    <CopyIcon/>
+                                  </Button>
+                                </InputRightElement>
+                              </InputGroup>
                             </FormControl>
                           </Box>
                           <Box>
                             <FormControl id="password" isRequired isReadOnly>
                               <FormLabel>Password</FormLabel>
+                              <InputGroup>
                               <Input
                                 type="text"
                                 defaultValue={
@@ -214,6 +223,21 @@ export default function Application() {
                                     : ""
                                 }
                               />
+                                <InputRightElement h={"full"}>
+                                  <Button
+                                  variant={"ghost"}
+                                    borderRadius={"full"}
+                                    onClick={() =>
+                                      setShowPassword(
+                                        (showPassword) => !showPassword,
+                                      )
+                                    }
+                                  >
+                                    <CopyIcon/>
+                                  </Button>
+                                </InputRightElement>
+                              </InputGroup>
+                              
                             </FormControl>
                           </Box>
                         </HStack>
@@ -226,10 +250,7 @@ export default function Application() {
                               bg: "blue.500",
                             }}
                             onClick={(e: any) =>
-                              handleDecrypt(
-                                item.encrypted_string,
-                                item.key,
-                              )
+                              handleDecrypt(item.encrypted_string, item.key)
                             }
                           >
                             Decrypt Credential

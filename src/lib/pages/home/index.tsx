@@ -10,18 +10,16 @@ import {
   createIcon,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useAccount, useConnect, useDisconnect } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
-import { useEffect } from 'react';
-import { MetaMaskConnector } from "wagmi/connectors/metaMask"
-
-
+import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { useEffect } from "react";
+import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 
 const Home = () => {
   const { address, isConnected } = useAccount();
   const { connect } = useConnect({
     connector: new MetaMaskConnector(),
-  })
+  });
 
   const navigate = useNavigate();
   // const handleToLogin = () => navigate("/login");

@@ -8,9 +8,9 @@ type PrivateRouteProps = {
 
 const RequireAuth = ({ children, redirectTo = "/" }: PrivateRouteProps) => {
   // add your own authentication logic here
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
 
-  return isConnected ? (
+  return (address || isConnected) ? (
     (children as React.ReactElement)
   ) : (
     <Navigate to={redirectTo} />
