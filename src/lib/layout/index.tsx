@@ -18,15 +18,15 @@ const Layout = ({ children }: LayoutProps) => {
     >
       <Blur
         position={"absolute"}
-        top={-10}
-        left={-20}
-        style={{ filter: "blur(20px)" }}
+        top={-100}
+        left={-100}
+        style={{ filter: "blur(80px)" }}
       />
       <Blur
         position={"fixed"}
-        bottom={-50}
-        right={-40}
-        style={{ filter: "blur(20px)" }}
+        bottom={-100}
+        right={-100}
+        style={{ filter: "blur(80px)" }}
         transform={"scaleX(-1) scaleY(-1)"}
       />
       <Flex wrap="wrap" margin="8" minHeight="90vh">
