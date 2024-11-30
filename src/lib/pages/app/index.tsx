@@ -34,6 +34,7 @@ import { useAccount } from "wagmi";
 import Lit from "../../components/LitProtocol";
 // import { supabase } from "../../helpers/supbaseClient"
 import Loader from "../../components/Loader";
+import { pocketbase } from "../../helpers/pocketbase"
 
 interface FeatureProps {
   text: string;
@@ -97,6 +98,14 @@ export default function Application() {
       .encryptText(JSON.stringify(webPassword), address)
       .then((encrypted) => {
         blobToBase64(encrypted.encryptedString).then((res) => {
+          pocketbase.collection("passwords").create({
+            address,
+            service: webPassword.site,
+            encrypted_string: res,
+            key: encrypted.encryptedSymmetricKey,
+          }).then((res) => {
+            console.log(res)
+          })
           // supabase.from('details').insert([
           //   {
           //     address,
