@@ -8,12 +8,11 @@ export const routes: Array<PathRouteProps> = [
     path: "/",
     element: <Home />,
   },
-
 ];
 
 export const privateRoutes: Array<PathRouteProps> = [
   {
     path: "/app",
     element: <App />,
-  }
+  },
 ];

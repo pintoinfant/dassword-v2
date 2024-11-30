@@ -1,20 +1,17 @@
-const LitJsSdk = require('@lit-protocol/sdk-browser');
-
+const LitJsSdk = require("@lit-protocol/sdk-browser");
 
 const client = new LitJsSdk.LitNodeClient();
 
 const accessControlConditions = [
   {
-    "conditionType": "evmBasic",
-    "contractAddress": "",
-    "standardContractType": "",
-    "chain": "ethereum",
-    "method": "",
-    "parameters": [
-      ":userAddress"
-    ],
-    "returnValueTest": ""
-  }
+    conditionType: "evmBasic",
+    contractAddress: "",
+    standardContractType: "",
+    chain: "ethereum",
+    method: "",
+    parameters: [":userAddress"],
+    returnValueTest: "",
+  },
 ];
 
 class Lit {
@@ -29,16 +26,22 @@ class Lit {
     if (!this.litNodeClient) {
       await this.connect();
     }
-    const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: "ethereum" });
-    const { encryptedString, symmetricKey } = await LitJsSdk.encryptString(text);
+    const authSig = await LitJsSdk.checkAndSignAuthMessage({
+      chain: "ethereum",
+    });
+    const { encryptedString, symmetricKey } =
+      await LitJsSdk.encryptString(text);
 
     const encryptedSymmetricKey = await this.litNodeClient.saveEncryptionKey({
-      accessControlConditions: [{
-        ...accessControlConditions[0], returnValueTest: {
-          "comparator": "=",
-          "value": walletAddress
-        }
-      }],
+      accessControlConditions: [
+        {
+          ...accessControlConditions[0],
+          returnValueTest: {
+            comparator: "=",
+            value: walletAddress,
+          },
+        },
+      ],
       symmetricKey,
       authSig,
       chain: "ethereum",
@@ -46,32 +49,41 @@ class Lit {
 
     return {
       encryptedString,
-      encryptedSymmetricKey: LitJsSdk.uint8arrayToString(encryptedSymmetricKey, "base16")
+      encryptedSymmetricKey: LitJsSdk.uint8arrayToString(
+        encryptedSymmetricKey,
+        "base16",
+      ),
     };
   }
 
-  async decryptText(encryptedString: any, encryptedSymmetricKey: any, walletAddress: any) {
+  async decryptText(
+    encryptedString: any,
+    encryptedSymmetricKey: any,
+    walletAddress: any,
+  ) {
     if (!this.litNodeClient) {
       await this.connect();
     }
 
-    const authSig = await LitJsSdk.checkAndSignAuthMessage({ chain: "ethereum" });
+    const authSig = await LitJsSdk.checkAndSignAuthMessage({
+      chain: "ethereum",
+    });
     const symmetricKey = await this.litNodeClient.getEncryptionKey({
-      accessControlConditions: [{
-        ...accessControlConditions[0], returnValueTest: {
-          "comparator": "=",
-          "value": walletAddress
-        }
-      }],
+      accessControlConditions: [
+        {
+          ...accessControlConditions[0],
+          returnValueTest: {
+            comparator: "=",
+            value: walletAddress,
+          },
+        },
+      ],
       toDecrypt: encryptedSymmetricKey,
       chain: "ethereum",
-      authSig
+      authSig,
     });
 
-    return await LitJsSdk.decryptString(
-      encryptedString,
-      symmetricKey
-    );
+    return await LitJsSdk.decryptString(encryptedString, symmetricKey);
   }
 }
 export default Lit;

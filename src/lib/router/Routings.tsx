@@ -24,9 +24,7 @@ const Routings = () => {
       {privateRoutes.map(({ element, ...privateRouteProps }) => (
         <Route
           element={
-            <RequireAuth
-              redirectTo={`/?redirectTo=${privateRouteProps.path}`}
-            >
+            <RequireAuth redirectTo={`/?redirectTo=${privateRouteProps.path}`}>
               {element}
             </RequireAuth>
           }

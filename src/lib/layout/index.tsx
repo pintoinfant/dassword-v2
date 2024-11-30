@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 import Footer from "./Footer";
 import Header from "./Header";
-import Blur from "../components/Blur"
+import Blur from "../components/Blur";
 
 type LayoutProps = {
   children: ReactNode;
@@ -11,7 +11,11 @@ type LayoutProps = {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <Box margin="0 auto" maxWidth={{ base: 800, md: '80vw' }} transition="0.5s ease-out">
+    <Box
+      margin="0 auto"
+      maxWidth={{ base: 800, md: "80vw" }}
+      transition="0.5s ease-out"
+    >
       <Blur
         position={"absolute"}
         top={-10}

@@ -1,12 +1,11 @@
 import { Box, Flex, Button, Wrap, WrapItem } from "@chakra-ui/react";
-import { useAccount, useDisconnect } from "wagmi"
+import { useAccount, useDisconnect } from "wagmi";
 
 import ThemeToggle from "./ThemeToggle";
 
 const Header = () => {
-
-  const { isConnected } = useAccount()
-  const { disconnect } = useDisconnect()
+  const { isConnected } = useAccount();
+  const { disconnect } = useDisconnect();
 
   return (
     <Flex
@@ -18,14 +17,16 @@ const Header = () => {
       gridGap={2}
     >
       <Box marginLeft="auto">
-        <Wrap direction={'row'} maxW={'80vw'} justify={'center'}>
+        <Wrap direction={"row"} maxW={"80vw"} justify={"center"}>
           <WrapItem>
             <ThemeToggle />
           </WrapItem>
           {isConnected && (
             <>
               <WrapItem>
-                <Button onClick={() => disconnect()}>Disconnect</Button>
+                <Button borderRadius="full" onClick={() => disconnect()}>
+                  Disconnect
+                </Button>
               </WrapItem>
             </>
           )}
