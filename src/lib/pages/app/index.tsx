@@ -87,7 +87,7 @@ export default function Application() {
     const decrypted = await lit.decryptText(blob, encrypted_key, address);
     const jsonData = JSON.parse(decrypted);
     setDecryptedPassword(jsonData);
-    setLoading(false);
+    await renderData()
   };
 
   const handleSubmit = () => {
@@ -228,7 +228,7 @@ export default function Application() {
                             onClick={(e: any) =>
                               handleDecrypt(
                                 item.encrypted_string,
-                                item.encrypted_key,
+                                item.key,
                               )
                             }
                           >
