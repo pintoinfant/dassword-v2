@@ -46,13 +46,13 @@ export default function Application() {
   const { colorMode } = useColorMode();
   const { address } = useAccount();
   const [webPassword, setWebPassword] = useState({
-    site: "",
+    service: "",
     username: "",
     password: "",
   });
 
   const [decryptedPassword, setDecryptedPassword] = useState<any>({
-    site: "",
+    service: "",
     username: "",
     password: "",
   });
@@ -84,7 +84,6 @@ export default function Application() {
   const handleDecrypt = async (encrypted_string: any, encrypted_key: any) => {
     setLoading(true);
     const blob = await convertToBlob(encrypted_string);
-    console.log(blob);
     const decrypted = await lit.decryptText(blob, encrypted_key, address);
     const jsonData = JSON.parse(decrypted);
     setDecryptedPassword(jsonData);
@@ -100,35 +99,28 @@ export default function Application() {
         blobToBase64(encrypted.encryptedString).then((res) => {
           pocketbase.collection("passwords").create({
             address,
-            service: webPassword.site,
+            service: webPassword.service,
             encrypted_string: res,
             key: encrypted.encryptedSymmetricKey,
-          }).then((record) => {
-            console.log(record)
           })
         });
-      })
-      .then(() => setLoading(false))
-      // .then(() => setLoading(false))
-      .then(() => {
+      }).then(() => {
         renderData();
-      });
-    // .then(() => setLoading())
-    // setLoading(false)
+      })
   };
 
   const renderData = async () => {
     setLoading(true);
-
+    const data = await pocketbase.collection("passwords").getFullList({
+      address
+    })
+    setData(data)
     setLoading(false);
   };
 
   const deleteCredential = async (id: any) => {
     setLoading(true);
-    // console.log(id)
-
-    // console.log(data)
-    // setLoading(false)
+    await pocketbase.collection("passwords").delete(id)
     await renderData();
   };
 
@@ -189,14 +181,13 @@ export default function Application() {
               <>
                 <GridItem key={index}>
                   <Card
-                    maxW={{ base: "100vw", md: "50vw", lg: "25vw" }}
                     key={index}
                   >
                     <CardBody>
                       <Stack spacing={4} marginTop={4}>
-                        <FormControl id="site" isRequired isReadOnly>
+                        <FormControl id="service" isRequired isReadOnly>
                           <FormLabel>Service Name</FormLabel>
-                          <Input type="url" defaultValue={item.site} />
+                          <Input type="url" defaultValue={item.service} />
                         </FormControl>
                         <HStack>
                           <Box>
@@ -205,7 +196,7 @@ export default function Application() {
                               <Input
                                 type="text"
                                 defaultValue={
-                                  item.site === decryptedPassword.site
+                                  item.service === decryptedPassword.service
                                     ? decryptedPassword.username
                                     : ""
                                 }
@@ -218,7 +209,7 @@ export default function Application() {
                               <Input
                                 type="text"
                                 defaultValue={
-                                  item.site === decryptedPassword.site
+                                  item.service === decryptedPassword.service
                                     ? decryptedPassword.password
                                     : ""
                                 }
@@ -268,7 +259,7 @@ export default function Application() {
           <ModalCloseButton />
           <ModalBody>
             <Stack spacing={4} marginTop={4}>
-              <FormControl id="site" isRequired>
+              <FormControl id="service" isRequired>
                 <FormLabel>Service Name</FormLabel>
                 <Input
                   borderRadius="full"
@@ -277,7 +268,7 @@ export default function Application() {
                   }
                   type="url"
                   onChange={(e) =>
-                    setWebPassword({ ...webPassword, site: e.target.value })
+                    setWebPassword({ ...webPassword, service: e.target.value })
                   }
                 />
               </FormControl>
