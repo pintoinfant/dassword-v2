@@ -87,6 +87,7 @@ export default function Application() {
     const decrypted = await lit.decryptText(blob, encrypted_key, address);
     const jsonData = JSON.parse(decrypted);
     setDecryptedPassword(jsonData);
+    console.log(jsonData);
     setLoading(false);
   };
 
