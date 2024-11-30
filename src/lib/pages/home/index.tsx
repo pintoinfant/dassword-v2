@@ -68,6 +68,7 @@ const Home = () => {
               _hover={{
                 bg: 'green.500',
               }}
+              borderRadius="full"
               onClick={() => connect()}
             >
               Get Started

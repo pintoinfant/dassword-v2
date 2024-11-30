@@ -167,7 +167,7 @@ export default function Application() {
           )}
         </Box>
         <Box>
-          <Button onClick={onOpen}>Add New Password</Button>
+          <Button borderRadius="full" onClick={onOpen}>Add New Password</Button>
         </Box>
       </Flex>
       <Box minH={'60vh'} marginY={5}>
@@ -229,7 +229,8 @@ export default function Application() {
             <Stack spacing={4} marginTop={4}>
               <FormControl id="site" isRequired>
                 <FormLabel>Service Name</FormLabel>
-                <Input focusBorderColor={
+                <Input
+                borderRadius="full" focusBorderColor={
             colorMode == "dark" ? "gray.300" : "gray.700"
           }  type="url" onChange={(e) => setWebPassword({ ...webPassword, site: e.target.value })}  />
               </FormControl>
@@ -237,7 +238,8 @@ export default function Application() {
                 <Box>
                   <FormControl id="username" isRequired>
                     <FormLabel>Username</FormLabel>
-                    <Input focusBorderColor={
+                    <Input
+                    borderRadius="full" focusBorderColor={
             colorMode == "dark" ? "gray.300" : "gray.700"
           }  type="text" onChange={(e) => setWebPassword({ ...webPassword, username: e.target.value })} />
                   </FormControl>
@@ -245,7 +247,8 @@ export default function Application() {
                 <Box>
                   <FormControl id="password" isRequired>
                     <FormLabel>Password</FormLabel>
-                    <Input focusBorderColor={
+                    <Input
+                    borderRadius="full" focusBorderColor={
             colorMode == "dark" ? "gray.300" : "gray.700"
           }  type="password" onChange={(e) => setWebPassword({ ...webPassword, password: e.target.value })} />
                   </FormControl>
@@ -254,6 +257,7 @@ export default function Application() {
               <Button colorScheme={'green'}
                 bg={'green.400'}
                 px={6}
+                borderRadius="full"
                 _hover={{
                   bg: 'green.500',
                 }} mr={3} onClick={(e: any) => handleSubmit()}>
@@ -265,6 +269,7 @@ export default function Application() {
             <Button colorScheme={'green'}
               bg={'green.400'}
               px={6}
+              borderRadius="full"
               _hover={{
                 bg: 'green.500',
               }} mr={3} onClick={onClose}>

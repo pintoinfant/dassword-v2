@@ -25,7 +25,9 @@ const Header = () => {
           {isConnected && (
             <>
               <WrapItem>
-                <Button onClick={() => disconnect()}>Disconnect</Button>
+      
+      <Button
+      borderRadius="full"  onClick={() => disconnect()}>Disconnect</Button>
               </WrapItem>
             </>
           )}
