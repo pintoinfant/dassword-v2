@@ -19,16 +19,21 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  Card, CardHeader, CardBody, CardFooter, Wrap, WrapItem,
-  Grid, GridItem,
-  useColorMode
-} from '@chakra-ui/react';
-import { ReactElement, useEffect, useState } from 'react';
-import { useAccount } from "wagmi"
-import Lit from "../../components/LitProtocol"
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Wrap,
+  WrapItem,
+  Grid,
+  GridItem,
+  useColorMode,
+} from "@chakra-ui/react";
+import { ReactElement, useEffect, useState } from "react";
+import { useAccount } from "wagmi";
+import Lit from "../../components/LitProtocol";
 // import { supabase } from "../../helpers/supbaseClient"
-import Loader from '../../components/Loader';
-
+import Loader from "../../components/Loader";
 
 interface FeatureProps {
   text: string;
@@ -36,34 +41,33 @@ interface FeatureProps {
   icon?: ReactElement;
 }
 
-
 export default function Application() {
   const { colorMode } = useColorMode();
-  const { address } = useAccount()
+  const { address } = useAccount();
   const [webPassword, setWebPassword] = useState({
     site: "",
     username: "",
-    password: ""
-  })
+    password: "",
+  });
 
   const [decryptedPassword, setDecryptedPassword] = useState<any>({
     site: "",
     username: "",
-    password: ""
-  })
+    password: "",
+  });
 
   const [showPassword, setShowPassword] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(true);
 
-  const [data, setData] = useState<any>([])
-  const lit = new Lit()
+  const [data, setData] = useState<any>([]);
+  const lit = new Lit();
 
   const blobToBase64 = (blob: any) => {
     const reader = new FileReader();
     reader.readAsDataURL(blob);
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       reader.onloadend = () => {
         resolve(reader.result);
       };
@@ -71,72 +75,75 @@ export default function Application() {
   };
 
   const convertToBlob = async (base64: any) => {
-    const res = await fetch(base64)
-    const blob = await res.blob()
-    return blob
-  }
+    const res = await fetch(base64);
+    const blob = await res.blob();
+    return blob;
+  };
 
   const handleDecrypt = async (encrypted_string: any, encrypted_key: any) => {
-    setLoading(true)
-    const blob = await convertToBlob(encrypted_string)
-    console.log(blob)
-    const decrypted = await lit.decryptText(blob, encrypted_key, address)
-    const jsonData = (JSON.parse(decrypted))
-    setDecryptedPassword(jsonData)
-    setLoading(false)
-  }
+    setLoading(true);
+    const blob = await convertToBlob(encrypted_string);
+    console.log(blob);
+    const decrypted = await lit.decryptText(blob, encrypted_key, address);
+    const jsonData = JSON.parse(decrypted);
+    setDecryptedPassword(jsonData);
+    setLoading(false);
+  };
 
   const handleSubmit = () => {
-    onClose()
-    setLoading(true)
-    lit.encryptText(JSON.stringify(webPassword), address).then((encrypted) => {
-      blobToBase64(encrypted.encryptedString).then(res => {
-        // supabase.from('details').insert([
-        //   {
-        //     address,
-        //     site: webPassword.site,
-        //     encrypted_string: res,
-        //     encrypted_key: encrypted.encryptedSymmetricKey
-        //   }
-        // ]).then(() => {
-        //   supabase.from('details').select('*').eq('address', address).then((data) => {
-        //     if (data) {
-        //       setData(data.data)
-        //     }
-        //   })
-        // })
-        console.log(res)
+    onClose();
+    setLoading(true);
+    lit
+      .encryptText(JSON.stringify(webPassword), address)
+      .then((encrypted) => {
+        blobToBase64(encrypted.encryptedString).then((res) => {
+          // supabase.from('details').insert([
+          //   {
+          //     address,
+          //     site: webPassword.site,
+          //     encrypted_string: res,
+          //     encrypted_key: encrypted.encryptedSymmetricKey
+          //   }
+          // ]).then(() => {
+          //   supabase.from('details').select('*').eq('address', address).then((data) => {
+          //     if (data) {
+          //       setData(data.data)
+          //     }
+          //   })
+          // })
+          console.log(res);
+        });
       })
-    }).then(() => setLoading(false))
+      .then(() => setLoading(false))
       // .then(() => setLoading(false))
-      .then(() => { renderData() })
+      .then(() => {
+        renderData();
+      });
     // .then(() => setLoading())
     // setLoading(false)
-
-  }
+  };
 
   const renderData = async () => {
-    setLoading(true)
-    
-    setLoading(false)
-  }
+    setLoading(true);
+
+    setLoading(false);
+  };
 
   const deleteCredential = async (id: any) => {
-    setLoading(true)
+    setLoading(true);
     // console.log(id)
-   
+
     // console.log(data)
     // setLoading(false)
-    await renderData()
-  }
-
+    await renderData();
+  };
 
   useEffect(() => {
-    renderData()
-  }, [])
+    renderData();
+  }, []);
 
   if (loading) {
-    return <Loader />
+    return <Loader />;
   }
 
   return (
@@ -152,32 +159,45 @@ export default function Application() {
       >
         <Box>
           {data.length > 0 ? (
-            <Heading>My <Text as={'span'} color={'green.400'}
-              textTransform={'capitalize'}
-            >
-              Passwords
-            </Text></Heading>
+            <Heading>
+              My{" "}
+              <Text as={"span"} color={"blue.400"} textTransform={"capitalize"}>
+                Passwords
+              </Text>
+            </Heading>
           ) : (
-            <Heading><Text as={'span'} color={'green.400'}
-              textTransform={'capitalize'}
-            >
-              No Password {" "}
-            </Text>
-              Created</Heading>
+            <Heading>
+              <Text as={"span"} color={"blue.400"} textTransform={"capitalize"}>
+                No Password{" "}
+              </Text>
+              Created
+            </Heading>
           )}
         </Box>
         <Box>
-          <Button borderRadius="full" onClick={onOpen}>Add New Password</Button>
+          <Button borderRadius="full" onClick={onOpen}>
+            Add New Password
+          </Button>
         </Box>
       </Flex>
-      <Box minH={'60vh'} marginY={5}>
-        <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(3, 1fr)' }} gap={2}>
+      <Box minH={"60vh"} marginY={5}>
+        <Grid
+          templateColumns={{
+            base: "repeat(1, 1fr)",
+            md: "repeat(2, 1fr)",
+            lg: "repeat(3, 1fr)",
+          }}
+          gap={2}
+        >
           {data.map((item: any, index: any) => {
             // console.log(item)
             return (
               <>
                 <GridItem key={index}>
-                  <Card maxW={{ base: '100vw', md: '50vw', lg: '25vw' }} key={index}>
+                  <Card
+                    maxW={{ base: "100vw", md: "50vw", lg: "25vw" }}
+                    key={index}
+                  >
                     <CardBody>
                       <Stack spacing={4} marginTop={4}>
                         <FormControl id="site" isRequired isReadOnly>
@@ -188,34 +208,62 @@ export default function Application() {
                           <Box>
                             <FormControl id="username" isRequired isReadOnly>
                               <FormLabel>Username</FormLabel>
-                              <Input type="text" defaultValue={(item.site === decryptedPassword.site) ? decryptedPassword.username : ''} />
+                              <Input
+                                type="text"
+                                defaultValue={
+                                  item.site === decryptedPassword.site
+                                    ? decryptedPassword.username
+                                    : ""
+                                }
+                              />
                             </FormControl>
                           </Box>
                           <Box>
                             <FormControl id="password" isRequired isReadOnly>
                               <FormLabel>Password</FormLabel>
-                              <Input type="text" defaultValue={(item.site === decryptedPassword.site) ? decryptedPassword.password : ''} />
+                              <Input
+                                type="text"
+                                defaultValue={
+                                  item.site === decryptedPassword.site
+                                    ? decryptedPassword.password
+                                    : ""
+                                }
+                              />
                             </FormControl>
                           </Box>
                         </HStack>
-                        <Stack direction={{ base: 'column', md: 'row' }}>
-                          <Button colorScheme={'green'}
-                            bg={'green.400'}
+                        <Stack direction={{ base: "column", md: "row" }}>
+                          <Button
+                            colorScheme={"blue"}
+                            bg={"blue.400"}
                             px={6}
                             _hover={{
-                              bg: 'green.500',
-                            }} onClick={(e: any) => handleDecrypt(item.encrypted_string, item.encrypted_key)}>
+                              bg: "blue.500",
+                            }}
+                            onClick={(e: any) =>
+                              handleDecrypt(
+                                item.encrypted_string,
+                                item.encrypted_key,
+                              )
+                            }
+                          >
                             Decrypt Credential
                           </Button>
-                          <Button colorScheme={'red'} px={6} mr={3} onClick={(e: any) => deleteCredential(item.id)}>
+                          <Button
+                            colorScheme={"red"}
+                            px={6}
+                            mr={3}
+                            onClick={(e: any) => deleteCredential(item.id)}
+                          >
                             Delete Credential
                           </Button>
                         </Stack>
-                      </Stack>                    </CardBody>
+                      </Stack>{" "}
+                    </CardBody>
                   </Card>
                 </GridItem>
               </>
-            )
+            );
           })}
         </Grid>
       </Box>
@@ -225,59 +273,90 @@ export default function Application() {
           <ModalHeader>Add New Password</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-
             <Stack spacing={4} marginTop={4}>
               <FormControl id="site" isRequired>
                 <FormLabel>Service Name</FormLabel>
                 <Input
-                borderRadius="full" focusBorderColor={
-            colorMode == "dark" ? "gray.300" : "gray.700"
-          }  type="url" onChange={(e) => setWebPassword({ ...webPassword, site: e.target.value })}  />
+                  borderRadius="full"
+                  focusBorderColor={
+                    colorMode == "dark" ? "gray.300" : "gray.700"
+                  }
+                  type="url"
+                  onChange={(e) =>
+                    setWebPassword({ ...webPassword, site: e.target.value })
+                  }
+                />
               </FormControl>
               <HStack>
                 <Box>
                   <FormControl id="username" isRequired>
                     <FormLabel>Username</FormLabel>
                     <Input
-                    borderRadius="full" focusBorderColor={
-            colorMode == "dark" ? "gray.300" : "gray.700"
-          }  type="text" onChange={(e) => setWebPassword({ ...webPassword, username: e.target.value })} />
+                      borderRadius="full"
+                      focusBorderColor={
+                        colorMode == "dark" ? "gray.300" : "gray.700"
+                      }
+                      type="text"
+                      onChange={(e) =>
+                        setWebPassword({
+                          ...webPassword,
+                          username: e.target.value,
+                        })
+                      }
+                    />
                   </FormControl>
                 </Box>
                 <Box>
                   <FormControl id="password" isRequired>
                     <FormLabel>Password</FormLabel>
                     <Input
-                    borderRadius="full" focusBorderColor={
-            colorMode == "dark" ? "gray.300" : "gray.700"
-          }  type="password" onChange={(e) => setWebPassword({ ...webPassword, password: e.target.value })} />
+                      borderRadius="full"
+                      focusBorderColor={
+                        colorMode == "dark" ? "gray.300" : "gray.700"
+                      }
+                      type="password"
+                      onChange={(e) =>
+                        setWebPassword({
+                          ...webPassword,
+                          password: e.target.value,
+                        })
+                      }
+                    />
                   </FormControl>
                 </Box>
               </HStack>
-              <Button colorScheme={'green'}
-                bg={'green.400'}
+              <Button
+                colorScheme={"blue"}
+                bg={"blue.400"}
                 px={6}
                 borderRadius="full"
                 _hover={{
-                  bg: 'green.500',
-                }} mr={3} onClick={(e: any) => handleSubmit()}>
+                  bg: "blue.500",
+                }}
+                mr={3}
+                onClick={(e: any) => handleSubmit()}
+              >
                 Submit
               </Button>
             </Stack>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme={'green'}
-              bg={'green.400'}
+            <Button
+              colorScheme={"blue"}
+              bg={"blue.400"}
               px={6}
               borderRadius="full"
               _hover={{
-                bg: 'green.500',
-              }} mr={3} onClick={onClose}>
+                bg: "blue.500",
+              }}
+              mr={3}
+              onClick={onClose}
+            >
               Close
             </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>
-    </Box >
+    </Box>
   );
 }

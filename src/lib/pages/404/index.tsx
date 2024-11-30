@@ -14,10 +14,12 @@ const Page404 = () => {
   const handleBackToHome = () => navigate("/");
 
   return (
-    <Grid gap={4} textAlign="center" minH={'50vh'}>
+    <Grid gap={4} textAlign="center" minH={"50vh"}>
       <Heading>Page not Found</Heading>
       <Box>
-        <Button onClick={handleBackToHome} size={'sm'}>Let&apos;s Head Back</Button>
+        <Button onClick={handleBackToHome} size={"sm"}>
+          Let&apos;s Head Back
+        </Button>
       </Box>
     </Grid>
   );

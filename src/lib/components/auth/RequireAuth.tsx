@@ -1,19 +1,14 @@
 import { Navigate } from "react-router-dom";
-import { useAccount } from 'wagmi'
-
+import { useAccount } from "wagmi";
 
 type PrivateRouteProps = {
   children: React.ReactNode;
   redirectTo?: string;
 };
 
-const RequireAuth = ({
-  children,
-  redirectTo = "/",
-}: PrivateRouteProps) => {
+const RequireAuth = ({ children, redirectTo = "/" }: PrivateRouteProps) => {
   // add your own authentication logic here
-  const { isConnected } = useAccount()
-
+  const { isConnected } = useAccount();
 
   return isConnected ? (
     (children as React.ReactElement)

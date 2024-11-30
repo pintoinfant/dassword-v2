@@ -9,9 +9,7 @@ const Footer = () => {
       alignSelf="flex-end"
       justifyContent="center"
     >
-      <Text fontSize="xs">
-        Made with ❤️ by{" "} Team Silly Server's
-      </Text>
+      <Text fontSize="xs">Made with ❤️ by Team Silly Server's</Text>
     </Flex>
   );
 };
