@@ -103,24 +103,9 @@ export default function Application() {
             service: webPassword.site,
             encrypted_string: res,
             key: encrypted.encryptedSymmetricKey,
-          }).then((res) => {
-            console.log(res)
+          }).then((record) => {
+            console.log(record)
           })
-          // supabase.from('details').insert([
-          //   {
-          //     address,
-          //     site: webPassword.site,
-          //     encrypted_string: res,
-          //     encrypted_key: encrypted.encryptedSymmetricKey
-          //   }
-          // ]).then(() => {
-          //   supabase.from('details').select('*').eq('address', address).then((data) => {
-          //     if (data) {
-          //       setData(data.data)
-          //     }
-          //   })
-          // })
-          console.log(res);
         });
       })
       .then(() => setLoading(false))
