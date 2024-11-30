@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from "react-router-dom";
 import { useAccount, useConnect, useDisconnect } from 'wagmi'
-import { InjectedConnector } from 'wagmi/connectors/injected'
+import { MetaMaskConnector } from '@wagmi/core/connectors/metaMask';
 import { useEffect } from 'react';
 
 
@@ -20,7 +20,7 @@ const Home = () => {
 
   const { address, isConnected } = useAccount()
   const { connect } = useConnect({
-    connector: new InjectedConnector(),
+    connector: new MetaMaskConnector(),
   })
 
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ const Home = () => {
               “Really Safe”
             </Text>
           </Heading>
-          <Text color={'gray.500'}>
+          <Text>
             Our advanced technology ensures protection against password breaches and unauthorized access. Choose our ultimate decentralized password manager for secure storage and encryption of your passwords. Rest easy with peace of mind and trust in our commitment to safeguard your online life.
           </Text>
           <Stack

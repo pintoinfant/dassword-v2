@@ -20,12 +20,13 @@ import {
   ModalCloseButton,
   useDisclosure,
   Card, CardHeader, CardBody, CardFooter, Wrap, WrapItem,
-  Grid, GridItem
+  Grid, GridItem,
+  useColorMode
 } from '@chakra-ui/react';
 import { ReactElement, useEffect, useState } from 'react';
 import { useAccount } from "wagmi"
 import Lit from "../../components/LitProtocol"
-import { supabase } from "../../helpers/supbaseClient"
+// import { supabase } from "../../helpers/supbaseClient"
 import Loader from '../../components/Loader';
 
 
@@ -37,6 +38,7 @@ interface FeatureProps {
 
 
 export default function Application() {
+  const { colorMode } = useColorMode();
   const { address } = useAccount()
   const [webPassword, setWebPassword] = useState({
     site: "",
@@ -89,20 +91,21 @@ export default function Application() {
     setLoading(true)
     lit.encryptText(JSON.stringify(webPassword), address).then((encrypted) => {
       blobToBase64(encrypted.encryptedString).then(res => {
-        supabase.from('details').insert([
-          {
-            address,
-            site: webPassword.site,
-            encrypted_string: res,
-            encrypted_key: encrypted.encryptedSymmetricKey
-          }
-        ]).then(() => {
-          supabase.from('details').select('*').eq('address', address).then((data) => {
-            if (data) {
-              setData(data.data)
-            }
-          })
-        })
+        // supabase.from('details').insert([
+        //   {
+        //     address,
+        //     site: webPassword.site,
+        //     encrypted_string: res,
+        //     encrypted_key: encrypted.encryptedSymmetricKey
+        //   }
+        // ]).then(() => {
+        //   supabase.from('details').select('*').eq('address', address).then((data) => {
+        //     if (data) {
+        //       setData(data.data)
+        //     }
+        //   })
+        // })
+        console.log(res)
       })
     }).then(() => setLoading(false))
       // .then(() => setLoading(false))
@@ -114,23 +117,14 @@ export default function Application() {
 
   const renderData = async () => {
     setLoading(true)
-    const { data, error }: { data: any, error: any } = await supabase
-      .from('details')
-      .select('*')
-      .eq('address', address)
-    if (data) {
-      setData(data)
-    }
+    
     setLoading(false)
   }
 
   const deleteCredential = async (id: any) => {
     setLoading(true)
     // console.log(id)
-    const { data, error } = await supabase
-      .from('details')
-      .delete()
-      .eq('id', id)
+   
     // console.log(data)
     // setLoading(false)
     await renderData()
@@ -187,7 +181,7 @@ export default function Application() {
                     <CardBody>
                       <Stack spacing={4} marginTop={4}>
                         <FormControl id="site" isRequired isReadOnly>
-                          <FormLabel>Website / App Name</FormLabel>
+                          <FormLabel>Service Name</FormLabel>
                           <Input type="url" defaultValue={item.site} />
                         </FormControl>
                         <HStack>
@@ -234,20 +228,26 @@ export default function Application() {
 
             <Stack spacing={4} marginTop={4}>
               <FormControl id="site" isRequired>
-                <FormLabel>Enter Website / App Name</FormLabel>
-                <Input type="url" onChange={(e) => setWebPassword({ ...webPassword, site: e.target.value })} />
+                <FormLabel>Service Name</FormLabel>
+                <Input focusBorderColor={
+            colorMode == "dark" ? "gray.300" : "gray.700"
+          }  type="url" onChange={(e) => setWebPassword({ ...webPassword, site: e.target.value })}  />
               </FormControl>
               <HStack>
                 <Box>
                   <FormControl id="username" isRequired>
                     <FormLabel>Username</FormLabel>
-                    <Input type="text" onChange={(e) => setWebPassword({ ...webPassword, username: e.target.value })} />
+                    <Input focusBorderColor={
+            colorMode == "dark" ? "gray.300" : "gray.700"
+          }  type="text" onChange={(e) => setWebPassword({ ...webPassword, username: e.target.value })} />
                   </FormControl>
                 </Box>
                 <Box>
                   <FormControl id="password" isRequired>
                     <FormLabel>Password</FormLabel>
-                    <Input type="password" onChange={(e) => setWebPassword({ ...webPassword, password: e.target.value })} />
+                    <Input focusBorderColor={
+            colorMode == "dark" ? "gray.300" : "gray.700"
+          }  type="password" onChange={(e) => setWebPassword({ ...webPassword, password: e.target.value })} />
                   </FormControl>
                 </Box>
               </HStack>

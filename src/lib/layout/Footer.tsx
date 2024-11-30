@@ -10,10 +10,7 @@ const Footer = () => {
       justifyContent="center"
     >
       <Text fontSize="xs">
-        {new Date().getFullYear()} -{" "}
-        <Link href="https://pintoinfant.xyz" isExternal>
-          pintoinfant.xyz
-        </Link>
+        Made with ❤️ by{" "} Team Silly Server's
       </Text>
     </Flex>
   );
