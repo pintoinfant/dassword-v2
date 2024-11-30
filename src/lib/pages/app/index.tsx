@@ -134,9 +134,10 @@ export default function Application() {
       <Flex
         as="header"
         width="full"
+        direction={{ base: "column", md: "row" }}
         align="center"
         // alignSelf="flex-start"
-        justifyContent="space-between"
+        justifyContent='space-between'
         gridGap={2}
         marginRight={4}
       >
