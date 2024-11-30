@@ -36,6 +36,8 @@ import Loader from "../../components/Loader";
 import { pocketbase } from "../../helpers/pocketbase";
 import { CopyIcon } from "@chakra-ui/icons";
 
+
+
 export default function Application() {
   const { colorMode } = useColorMode();
   const { address } = useAccount();
@@ -186,8 +188,7 @@ export default function Application() {
                           <Box>
                             <FormControl id="username" isRequired isReadOnly>
                               <FormLabel>Username</FormLabel>
-                              <InputGroup>
-                                <Input
+                              <Input
                                   type="text"
                                   defaultValue={
                                     item.service === decryptedPassword.service
@@ -195,26 +196,11 @@ export default function Application() {
                                       : ""
                                   }
                                 />
-                                <InputRightElement h={"full"}>
-                                  <Button
-                                  variant={"ghost"}
-                                    borderRadius={"full"}
-                                    onClick={() =>
-                                      setShowPassword(
-                                        (showPassword) => !showPassword,
-                                      )
-                                    }
-                                  >
-                                    <CopyIcon/>
-                                  </Button>
-                                </InputRightElement>
-                              </InputGroup>
                             </FormControl>
                           </Box>
                           <Box>
                             <FormControl id="password" isRequired isReadOnly>
                               <FormLabel>Password</FormLabel>
-                              <InputGroup>
                               <Input
                                 type="text"
                                 defaultValue={
@@ -223,20 +209,6 @@ export default function Application() {
                                     : ""
                                 }
                               />
-                                <InputRightElement h={"full"}>
-                                  <Button
-                                  variant={"ghost"}
-                                    borderRadius={"full"}
-                                    onClick={() =>
-                                      setShowPassword(
-                                        (showPassword) => !showPassword,
-                                      )
-                                    }
-                                  >
-                                    <CopyIcon/>
-                                  </Button>
-                                </InputRightElement>
-                              </InputGroup>
                               
                             </FormControl>
                           </Box>
