@@ -26,7 +26,7 @@ const Home = () => {
 
   useEffect(() => {
     if (isConnected) {
-      // console.log('address', address)
+      localStorage.setItem("address", address as string);
       navigate("/app");
     }
   }, [isConnected]);

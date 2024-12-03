@@ -24,7 +24,10 @@ const Header = () => {
           {isConnected && (
             <>
               <WrapItem>
-                <Button borderRadius="full" onClick={() => disconnect()}>
+                <Button borderRadius="full" onClick={() => {
+                  disconnect();
+                  localStorage.removeItem("address");
+                }}>
                   Disconnect
                 </Button>
               </WrapItem>

@@ -10,7 +10,7 @@ const RequireAuth = ({ children, redirectTo = "/" }: PrivateRouteProps) => {
   // add your own authentication logic here
   const { isConnected, address } = useAccount();
 
-  return (address || isConnected) ? (
+  return (address || isConnected || localStorage.getItem('address') == address) ? (
     (children as React.ReactElement)
   ) : (
     <Navigate to={redirectTo} />

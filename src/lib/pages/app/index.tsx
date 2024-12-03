@@ -178,7 +178,7 @@ export default function Application() {
             return (
               <>
                 <GridItem key={index}>
-                  <Card key={index}>
+                  <Card key={index} borderRadius={'2xl'}>
                     <CardBody>
                       <Stack spacing={4} marginTop={4}>
                         <FormControl id="service" isRequired isReadOnly>
@@ -216,12 +216,8 @@ export default function Application() {
                         </HStack>
                         <Stack direction={{ base: "column", md: "row" }}>
                           <Button
-                            // colorScheme={"blue"}
-                            // bg={"blue.400"}
                             px={6}
-                            // _hover={{
-                            //   bg: "blue.500",
-                            // }}
+                            borderRadius={'full'}
                             onClick={(e: any) =>
                               handleDecrypt(item.encrypted_string, item.key)
                             }
@@ -232,6 +228,7 @@ export default function Application() {
                             colorScheme={"red"}
                             px={6}
                             mr={3}
+                            borderRadius={'full'}
                             onClick={(e: any) => deleteCredential(item.id)}
                           >
                             Delete Credential
