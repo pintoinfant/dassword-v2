@@ -1,59 +1,81 @@
-This project was bootstrapped with
-[Create React App](https://github.com/facebook/create-react-app).
+# Decentralized Password Manager 🔑🛡️ (Lit Protocol + Shamir Secret Sharing)
 
-## Available Scripts
+This open-source project provides a decentralized password manager, enhancing security and user control. We utilize Lit Protocol for secure access control, Shamir's Secret Sharing for key distribution, SQLite for local data storage managed by PocketBase (as a Backend-as-a-Service), and React with Chakra UI for a user-friendly interface.
 
-In the project directory, you can run:
+## Purpose 🚀
 
-### `yarn start`
+Traditional password managers are vulnerable to single points of failure. This project mitigates this risk by:
 
-Runs the app in the development mode.<br /> Open
-[http://localhost:3000](http://localhost:3000) to view it in the browser.
+* **Decentralized Key Management:**  Shamir's Secret Sharing distributes your encryption key across multiple nodes, preventing single points of failure.  Even if some nodes are compromised, your data remains safe. 🛡️
+* **Secure Encryption:**  Symmetric encryption protects your passwords.  Only you, possessing the reconstructed key, can access them. 🔒
+* **Lit Protocol Access Control:** Lit Protocol ensures only authorized users (you!) can access your encrypted data.  Zero-knowledge proofs guarantee your privacy. 🕵️‍♂️
+* **Local Data Storage (SQLite):**  Your encrypted data resides in a local SQLite database, managed by PocketBase for simplicity and scalability.  This minimizes reliance on external services. 🗄️
+* **User-Friendly Interface:**  Built with React and Chakra UI for a smooth and intuitive experience.  😊
 
-The page will reload if you make edits.<br /> You will also see any lint errors
-in the console.
 
-### `yarn test`
+## Architecture 🏗️
 
-Launches the test runner in the interactive watch mode.<br /> See the section
-about
-[running tests](https://facebook.github.io/create-react-app/docs/running-tests)
-for more information.
+The application is composed of:
 
-### `yarn build`
+1. **Frontend (React + Chakra UI):** Handles user interaction, encryption/decryption using a symmetric key, Shamir's Secret Sharing management, and communication with PocketBase. 💻
+2. **Shamir's Secret Sharing:**  The core of our key management strategy. The symmetric encryption key is split into shares and distributed securely.  The user reconstructs the key upon login. 🧩
+3. **Symmetric Encryption:** AES or a similar robust algorithm is used for encrypting the password data before storage. 🤫
+4. **PocketBase (Backend-as-a-Service):** Manages the SQLite database containing the *encrypted* password data.  PocketBase provides an easy way to manage and access the database without managing a full backend infrastructure.  ☁️
+5. **Lit Protocol:** Securely manages access control to the encrypted data.  Lit's zero-knowledge approach protects your secrets.  🔑
 
-Builds the app for production to the `build` folder.<br /> It correctly bundles
-React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br /> Your app is
-ready to be deployed!
+## Setup 🛠️
 
-See the section about
-[deployment](https://facebook.github.io/create-react-app/docs/deployment) for
-more information.
+### Prerequisites
 
-### `yarn eject`
+* Node.js and npm (or yarn)
+* PocketBase instance (Create one following their documentation)  You'll need the PocketBase URL and API key.
+* Lit Protocol development environment setup (follow Lit Protocol's documentation)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can
-`eject` at any time. This command will remove the single build dependency from
-your project.
+### Installation
 
-Instead, it will copy all the configuration files and the transitive
-dependencies (webpack, Babel, ESLint, etc) right into your project so you have
-full control over them. All of the commands except `eject` will still work, but
-they will point to the copied scripts so you can tweak them. At this point
-you’re on your own.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/pintoinfant/dassword-v2
+   ```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for
-small and middle deployments, and you shouldn’t feel obligated to use this
-feature. However we understand that this tool wouldn’t be useful if you couldn’t
-customize it when you are ready for it.
+2. Navigate to the project directory:
+   ```bash
+   cd dassword-v2
+   ```
 
-## Learn More
+3. Install dependencies:
+   ```bash
+   npm install  # or yarn install
+   ```
 
-You can learn more in the
-[Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+4. **Configure Environment Variables:** Create a `.env` file (see `.env.example`) with:
+    * `POCKETBASE_URL`: Your PocketBase instance URL.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. Run the development server:
+   ```bash
+   npm start  # or yarn start
+   ```
+
+
+## Usage ✨
+
+The application will guide you through:
+
+* **Account Creation:** Setting up your master key and distributing shares.
+* **Password Management:** Adding, editing, deleting, and viewing passwords securely.  Access is controlled by your reconstructed key.
+* **Key Recovery:**  Procedures for handling lost shares and key reconstruction.  (Implementation details depend on your Shamir's Secret Sharing implementation.)
+
+
+## Contributing 🤝
+
+Contributions are welcome!  Please:
+
+* Open an issue to report bugs or suggest features. 🐛
+* Fork the repository and submit pull requests.  PRs that improve security are especially appreciated! ⬆️
+
+
+## Disclaimer ⚠️
+
+This is open-source software. Use at your own risk. While we've implemented strong security measures, no system is perfectly secure.  Thorough testing and security audits are essential before deploying this in a production environment.  The specifics of Shamir's Secret Sharing implementation and key recovery processes are crucial for security.  Clearly document these aspects.
