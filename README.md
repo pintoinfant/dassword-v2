@@ -1,5 +1,8 @@
 # Decentralized Password Manager 🔑🛡️ (Lit Protocol + Shamir Secret Sharing)
 
+![GitHub contributors](https://img.shields.io/github/contributors/pintoinfant/dassword-v2)
+
+
 This open-source project provides a decentralized password manager, enhancing security and user control. We utilize Lit Protocol for secure access control, Shamir's Secret Sharing for key distribution, SQLite for local data storage managed by PocketBase (as a Backend-as-a-Service), and React with Chakra UI for a user-friendly interface.
 
 ## Purpose 🚀
