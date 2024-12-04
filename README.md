@@ -71,6 +71,9 @@ Contributions are welcome! Please:
 * Open an issue to report bugs or suggest features. 🐛
 * Fork the repository and submit pull requests. PRs that improve security are especially appreciated! ⬆️
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=pintoinfant/dassword-v2&type=Timeline)](https://star-history.com/#pintoinfant/dassword-v2&Timeline)
 
 ## Disclaimer ⚠️
 
