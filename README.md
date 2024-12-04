@@ -60,7 +60,7 @@ The application is composed of:
 ## Workflow 🔄
 
 1. **Service Input:** The user provides the service name, username, and password.
-2. **Encryption and Key Sharing:** The data is converted to JSON, encrypted using a symmetric key (AES), and the key is then split into shares using Shamir's Secret Sharing.  These shares are stored using the Lit Protocol. The encrypted data is signed using a crypto wallet (specify which one).
+2. **Encryption and Key Sharing:** The data is converted to JSON, encrypted using a symmetric key (AES), and the key is then split into shares using Shamir's Secret Sharing.  These shares are stored using the Lit Protocol. The encrypted data is signed using a crypto wallet.
 3. **Database Storage:** The encrypted JSON data (passwords) and the encrypted symmetric key (managed by Lit Protocol) are stored in the PocketBase SQLite database.
 4. **Access and Decryption:** When the user wants to view a service, they request access from the Lit Protocol. If the access control conditions are met (and enough shares are available to reconstruct the key), the Lit Protocol provides the shares, the client-side reconstructs the symmetric key, and decrypts the data.
 
@@ -74,4 +74,4 @@ Contributions are welcome! Please:
 
 ## Disclaimer ⚠️
 
-This is open-source software. Use at your own risk. While we've implemented strong security measures, no system is perfectly secure. Thorough testing and security audits are essential before deploying this in a production environment. The specifics of Shamir's Secret Sharing implementation and key recovery processes are crucial for security. Clearly document these aspects.  Consider using a well-vetted library for Shamir's Secret Sharing to ensure robust implementation.
+This is open-source software. Use at your own risk. While we've implemented strong security measures, no system is perfectly secure. Thorough testing and security audits are essential before deploying this in a production environment. The specifics of Shamir's Secret Sharing implementation and key recovery processes are crucial for security.
